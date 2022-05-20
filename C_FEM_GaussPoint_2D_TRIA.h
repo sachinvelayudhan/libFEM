@@ -19,8 +19,8 @@ class C_GaussPoint_2D_TRIA
 
         if (num_GP == 1)
         {
-            ptx = {1/3};
-            pty = {1/3};
+            ptx = {0.3333333333};
+            pty = {0.3333333333};
             wt = {1.0};
         }
         else if (num_GP == 3)

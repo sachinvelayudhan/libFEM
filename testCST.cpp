@@ -10,15 +10,14 @@
 
 int main()
 {
-    std::vector<double> x;
-    std::vector<double> y;
-    // C_Matrix_Dense sp;
-    // sp.reshape(2,2);
-    // x = {0, 1, 0};
-    // y = {0, 0, 1};
-
-    C_GaussPoint_2D_TRIA gpData(3);
+    C_GaussPoint_2D_TRIA gpData(1);
     C_TriangleBasis feLag(1,gpData);
+    C_Matrix_Dense ke(3,3);
 
+    for (int itGp=0; itGp<gpData.num_GP; itGp++)
+    {
+        ke=ke+(feLag.dsp[itGp].T()*feLag.dsp[itGp]);
+    }
+    std::cout<< ke;
     return 0;
 }
