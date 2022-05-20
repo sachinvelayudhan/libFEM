@@ -356,6 +356,14 @@ class C_Matrix_Dense{
         }
     }
 
+    void reshape(int noRow, int noCol)
+    {
+        int noVal=noCol*noRow;
+        (*this).NNZ=noVal;
+        (*this).row_size=noRow;
+        (*this).col_size=noCol;
+        (*this).values.resize(noVal);
+    }
 
     //! Assignment Operator, from Dense Matrix
     C_Matrix_Dense operator=(C_Matrix_Dense obj2) {
