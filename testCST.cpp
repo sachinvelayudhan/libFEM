@@ -13,10 +13,9 @@ int main()
     C_GaussPoint_2D_TRIA gpData(1);
     C_TriangleBasis feLag(1,gpData);
     C_Matrix_Dense ke(3,3);
-
     for (int itGp=0; itGp<gpData.num_GP; itGp++)
     {
-        ke=ke+(feLag.dsp[itGp].T()*feLag.dsp[itGp]);
+        ke=(ke+1.0*(feLag.dsp[itGp].T()*feLag.dsp[itGp]));
     }
     std::cout<< ke;
     return 0;
