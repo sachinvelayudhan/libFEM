@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include <stdexcept>
 #include <exception>
 
 #include "f_MiscellaneousFunctions.h"
@@ -114,6 +115,47 @@ class C_Matrix_Dense{
 
         // Access value assigned
         return access_slice;
+    }
+
+    void  operator+=(C_Matrix_Dense& inMat)
+    {
+        if(inMat.row_size!=(*this).row_size)
+        {
+            std::string error_message = "Matrix cannot be added: Incompatible row size";
+            error_message = error_message + ". Error in: " + __FILE__ + ", at line " + std::to_string(__LINE__) + ".";
+            throw std::out_of_range(error_message); 
+        }
+        if(inMat.col_size!=(*this).col_size)
+        {
+            std::string error_message = "Matrix cannot be added: Incompatible column size";
+            error_message = error_message + ". Error in: " + __FILE__ + ", at line " + std::to_string(__LINE__) + ".";
+            throw std::out_of_range(error_message); 
+        }
+        for (int i=0; i<inMat.NNZ; i++)
+        {
+            (*this).values[i]+=inMat.values[i];
+        }
+
+    }
+    void  operator-=(C_Matrix_Dense& inMat)
+    {
+        if(inMat.row_size!=(*this).row_size)
+        {
+            std::string error_message = "Matrix cannot be subtracted: Incompatible row size";
+            error_message = error_message + ". Error in: " + __FILE__ + ", at line " + std::to_string(__LINE__) + ".";
+            throw std::out_of_range(error_message); 
+        }
+        if(inMat.col_size!=(*this).col_size)
+        {
+            std::string error_message = "Matrix cannot be subtracted: Incompatible column size";
+            error_message = error_message + ". Error in: " + __FILE__ + ", at line " + std::to_string(__LINE__) + ".";
+            throw std::out_of_range(error_message); 
+        }
+        for (int i=0; i<inMat.NNZ; i++)
+        {
+            (*this).values[i]-=inMat.values[i];
+        }
+
     }
     //!     ii.  Slice: (row_range, col)
     C_Matrix_Dense operator() (std::vector<int> r_i, int c_i) { 
