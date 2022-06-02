@@ -10,12 +10,9 @@
 
 #include "C_Matrix_Dense.h"
 
-//! This code initializes sparse matrix objects for use w/ various linear solvers.
 /*!
-When initializing, the data is stored as Coordinate Lists (COO).
-
-Once initialized, convert to CSR for use w/ needed algorithms:
-    C_Matrix_Sparse::convert_to_CSR()
+C_Matrix_Sparse is a sparse matrix storage container. It can dynamically resize as data comes in. The present implementation permits it initialize the sparse matrix containedr with out knowing the size (rows x columns) of the sparse matrix. Upon initialization, the data is stored using a vector of linked lists.
+Once filled, the data stored in the linked list can be convert to CSR and other formats.
 
 Author: Dominic Jarecki
 Date: 3-24-2022
@@ -45,12 +42,15 @@ class C_Matrix_Sparse{
         int row_size = -1, col_size = -1; //! Track size as object grows
         int NNZ = 0;                      //! Number of non-zero elements
 
-        int active_flag = 1; //! Active data format; 1: COO, 2: CSR, 3: CSC
+        // int active_flag = 1; //! Active data format; 1: COO, 2: CSR, 3: CSC
 
     // I. Constructor
     C_Matrix_Sparse(){}
 
     C_Matrix_Sparse(int row_size_in, int col_size_in) {
+        /*
+        This initializer only initializes one column and one row for the whole sparse matrix.
+        */
         row_size = row_size_in;
         col_size = col_size_in;
         NNZ = 0;
@@ -97,7 +97,7 @@ class C_Matrix_Sparse{
 
     //! 2. Row and column scalar assignment: ONLY MODIFIES NON-SPARSE DATA
     void row_NonSparseAssign(double val, int r_i) {
-        //! This function assigns all NON-SPARSE vals in row r_i to be val.
+        //! This function assigns all Non-Zero vals in row r_i to be val.
         /*!
         SPARSE VALUES ARE NOT MODIFIED.
         NOTE: This is a quick operation.
@@ -130,8 +130,11 @@ class C_Matrix_Sparse{
 
             for (int ii = 0; ii < init_length; ii++){
                 // Check row
-                if (*it_c == c_i) { *it_v = val; break; }
-
+                if (*it_c == c_i) 
+                { 
+                    *it_v = val; 
+                    break; 
+                }
                 ++it_v;
                 ++it_c;
             }
@@ -233,11 +236,11 @@ class C_Matrix_Sparse{
         }
 
         // Update CSR Representation Automatically
-        if (active_flag == 2) { convert_to_CSR(); }
+        // if (active_flag == 2) { convert_to_CSR(); }
     }
     //!     ii. Add element at slices
-    void add_matr(double mat_val, std::vector<int> r_i, std::vector<int> c_i) {
-        //! Add Dense Matrix at Sliced Locations
+    void add_matr(double val, std::vector<int> r_i, std::vector<int> c_i) {
+        //! Add a constant value to the at Sliced Locations
         /*!
         Stores complete matrix value at (row, pair) locations given by vectors a and b,
         ADDING to the previously stored value.
@@ -253,7 +256,7 @@ class C_Matrix_Sparse{
         */
         for (int ii = 0; ii < r_i.size(); ii++) {
             for (int jj = 0; jj < c_i.size(); jj++) { 
-                add_elem(mat_val, r_i[ii], c_i[jj]); 
+                add_elem(val, r_i[ii], c_i[jj]); 
             }
         }
     }
@@ -373,7 +376,7 @@ class C_Matrix_Sparse{
         }
 
         // Update CSR Representation Automatically
-        if (active_flag == 2) { convert_to_CSR(); }
+        // if (active_flag == 2) { convert_to_CSR(); }
     }
     //!     ii. Set element at slices
     void set_matr(double mat_val, std::vector<int> r_i, std::vector<int> c_i) {
@@ -397,7 +400,7 @@ class C_Matrix_Sparse{
         }
     }
     //!     iii. Set matrix at slices
-    void set_matr(C_Matrix_Dense mat, std::vector<int> r_i, std::vector<int> c_i) {
+    void set_matr(C_Matrix_Dense& mat, std::vector<int> r_i, std::vector<int> c_i) {
         //! Set Dense Matrix at Sliced Locations
         /*!
         Stores complete matrix mat at (row, pair) locations given by vectors a and b,
@@ -422,7 +425,7 @@ class C_Matrix_Sparse{
 
         DIJ (4-15-22)
         */
-        active_flag = 2; // CSR Format
+        // active_flag = 2; // CSR Format
 
         value.resize(NNZ,   0); 
         row_ind.resize(row_size+1, 0); 
@@ -450,59 +453,11 @@ class C_Matrix_Sparse{
         }
     }
 
-
-    // IV. Display
-    void print_contents() {
-        if (active_flag == 1){
-            // List
-            std::cout << "\n";
-            std::cout <<  row_size << " x " << col_size;
-            std::cout << " Sparse Matrix stored in COO Form\n";
-            std::cout << "(Row, Column, Value)\n";
-
-            // Iterate through list
-            for (int ii = 0; ii <= row_size; ii++) {
-                std::forward_list<double>::iterator it_v = value_list[ii].begin();
-                std::forward_list<int>::iterator    it_c = col_ind_list[ii].begin();
-                
-                // Skip, if no elements are contained in this row
-                int init_length = std::distance(value_list[ii].begin(), value_list[ii].end());
-                if (init_length < 1) { continue; }
-
-                for(int jj = 0; jj < init_length; jj++){
-                    std::cout << "(" << ii << "," << *it_c << "," << *it_v << ")\n";
-                    ++it_v;
-                    ++it_c;
-                }
-            }
-
-        } else if (active_flag == 2){
-            // CSR
-            std::cout << "\n";
-            std::cout <<  row_size << " x " << col_size;
-            std::cout << " Sparse Matrix stored in CSR Form\n";
-            std::cout << "(Row, Column, Value)\n";
-            for (int ii = 0; ii <= row_size; ii++){
-                int row_start = row_ind[ii];
-                int row_end   = row_ind[ii + 1];
-
-                std::vector<int>    col_slice = std::vector<int>(col_ind.begin()  + row_start, col_ind.begin() + row_end);
-                std::vector<double> val_slice = std::vector<double>(value.begin() + row_start, value.begin()   + row_end);
-
-                for (int jj = 0; jj < col_slice.size(); jj++) { 
-                    std::cout << "(" << ii << "," << col_slice[jj] << ",";
-                    std::cout << val_slice[jj] << ")\n";
-                    }
-            }
-        } 
-        
-        }
-
 };
 
-//! EXTERNAL FUNCTIONS
-//! i. Operator Overload for Output 
+
 /*! 
+Pretty print the sparse matrix:
 This overload is performed exterior to the C_Matrix_... class so that it can be 
 accessed by the std::ostream class and standard syntax can be employed.
 */
