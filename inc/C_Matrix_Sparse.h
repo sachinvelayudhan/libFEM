@@ -252,11 +252,13 @@ class C_Matrix_Sparse{
         DIJ (5-18-22)
         */
         for (int ii = 0; ii < r_i.size(); ii++) {
-            for (int jj = 0; jj < c_i.size(); jj++) { add_elem(mat_val, r_i[ii], c_i[jj]); }
+            for (int jj = 0; jj < c_i.size(); jj++) { 
+                add_elem(mat_val, r_i[ii], c_i[jj]); 
+            }
         }
     }
     //!     iii. Add matrix at slices
-    void add_matr(C_Matrix_Dense mat, std::vector<int> r_i, std::vector<int> c_i) {
+    void add_matr(C_Matrix_Dense& mat, std::vector<int> r_i, std::vector<int> c_i) {
         //! Add Dense Matrix at Sliced Locations
         /*!
         Stores complete matrix mat at (row, pair) locations given by vectors a and b,
@@ -269,7 +271,10 @@ class C_Matrix_Sparse{
         DIJ (5-11-22)
         */
         for (int ii = 0; ii < r_i.size(); ii++) {
-            for (int jj = 0; jj < c_i.size(); jj++) { add_elem(mat(ii,jj), r_i[ii], c_i[jj]); }
+            for (int jj = 0; jj < c_i.size(); jj++) 
+            { 
+                add_elem(mat(ii,jj), r_i[ii], c_i[jj]); 
+            }
         }
     }
 
