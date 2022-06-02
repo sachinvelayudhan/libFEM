@@ -1,10 +1,8 @@
-main:
-	g++ -std=c++17 -g -c main.cpp
-	g++ -std=c++17 -o main.exe main.o
-	./main.exe
-cst:
-	g++ -std=c++17 -g -c testCST.cpp
-	g++ -std=c++17 -o main.exe testCST.o
+eigenPath= $(CURDIR)/
+solverIntef= $(CURDIR)/Solver_Interfaces/
+bar:
+	g++ -std=c++17 -g -c */main_1D_Template.cpp -I$(eigenPath) -I$(solverIntef)
+	g++ -std=c++17 -o main.exe main_1D_Template.o
 	./main.exe
 matrix_test_1:
 	g++ -std=c++17 -g -c */main_MatrixDemo_1.cpp
