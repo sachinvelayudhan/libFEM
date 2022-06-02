@@ -1,4 +1,4 @@
-#include <eigen-3.4.0/Eigen/Dense>  // Linear Solver Libraries
+#include <eigen-3.4.0/Eigen/Dense> 
 #include <eigen-3.4.0/Eigen/Sparse>
 
 #include "C_FEM_BasisFunction_1D.h"
