@@ -117,7 +117,7 @@ class C_Matrix_Dense{
         return access_slice;
     }
 
-    void  operator+=(C_Matrix_Dense& inMat)
+    void  operator+=(const C_Matrix_Dense& inMat)
     {
         if(inMat.row_size!=(*this).row_size)
         {
@@ -137,7 +137,7 @@ class C_Matrix_Dense{
         }
 
     }
-    void  operator-=(C_Matrix_Dense& inMat)
+    void  operator-=(const C_Matrix_Dense& inMat)
     {
         if(inMat.row_size!=(*this).row_size)
         {
