@@ -1,18 +1,16 @@
 eigenPath= $(CURDIR)/
-incPath= $(CURDIR)/inc/
+solverIntef= $(CURDIR)/Solver_Interfaces/
 cst:
-	g++ -std=c++17 -g -c mainLaplaceCST.cpp -I$(eigenPath) -I$(incPath)
-	g++ -std=c++17 -o main.exe mainLaplaceCST.o
+	g++ -std=c++17 -g -c testCST.cpp -I$(eigenPath) -I$(solverIntef)
+	g++ -std=c++17 -o main.exe testCST.o
 	./main.exe
-bar:
-	g++ -std=c++17 -g -c mainAxialBar.cpp -I$(eigenPath) -I$(incPath)
-	g++ -std=c++17 -o main.exe mainAxialBar.o
+matrix_test_1:
+	g++ -std=c++17 -g -c */main_MatrixDemo_1.cpp
+	g++ -std=c++17 -o main.exe main_MatrixDemo_1.o
+quad:
+	g++ -std=c++17 -g -c testQUAD.cpp -I$(eigenPath) -I$(solverIntef)
+	g++ -std=c++17 -o main.exe testQUAD.o
 	./main.exe
-testMat:
-	g++ -std=c++17 -g -c mainTestMatrixOperations.cpp -I$(eigenPath) -I$(incPath)
-	g++ -std=c++17 -o main.exe mainTestMatrixOperations.o
-	./main.exe
-
 clean:
 	rm -v *.o
 	rm -v *.exe
