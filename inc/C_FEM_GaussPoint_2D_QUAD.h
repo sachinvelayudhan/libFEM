@@ -6,7 +6,7 @@
 #include <iostream>
 #include "C_FEM_GaussPoint_1D.h"
 
-class C_GaussPoint_2D_QUAD:
+class C_GaussPoint_2D_QUAD
 {
     public:
         int num_GP; //!< Number of Gauss Points

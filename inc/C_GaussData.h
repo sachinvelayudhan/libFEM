@@ -26,7 +26,7 @@ class C_GaussData1D: public C_GaussData{
             wt = {2.0};
         }
         else if (num_GP == 2){
-            ptx = {0.577350269189626, -0.577350269189626};
+            ptx = {-0.577350269189626, 0.577350269189626};
             wt = {1.0,                1.0};
         }
         else if (num_GP == 3){

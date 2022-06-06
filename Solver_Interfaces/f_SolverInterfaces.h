@@ -1,8 +1,8 @@
 #ifndef f_SOLVERINTERFACES_H
 #define f_SOLVERINTERFACES_H
 
-#include <eigen-3.4.0/Eigen/Dense>
-#include <eigen-3.4.0/Eigen/Sparse>
+#include "../eigen-3.4.0/Eigen/Dense" 
+#include "../eigen-3.4.0/Eigen/Sparse"
 
 #include <math.h>
 #include <vector>
@@ -11,7 +11,7 @@
 #include <algorithm>
 #include <forward_list>
 
-#include "C_Matrix_Sparse.h"
+#include "../inc/C_Matrix_Sparse.h"
 
 void convert_to_Eigen(C_Matrix_Sparse& kG, Eigen::SparseMatrix<double>& kG_eigen) {
     /*!

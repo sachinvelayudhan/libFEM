@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Jun  5 11:35:56 2022
+# Make data base, printed on Sun Jun  5 19:32:50 2022
 
 # Variables
 
@@ -36,8 +36,8 @@ SHELL = /bin/sh
 VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
 # environment
 _ = /home/sachin/.vscode-server/bin/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5/node
-# makefile
-MAKEFILE_LIST := 
+# makefile (from 'makefile', line 1)
+MAKEFILE_LIST :=  makefile
 # 'override' directive
 GNUMAKEFLAGS := 
 # environment
@@ -57,7 +57,7 @@ XDG_RUNTIME_DIR = /mnt/wslg/runtime-dir
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-efad0bfc-9116-43c4-ad2a-cc1fd815273e.sock
+VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-44b1525a-4491-441a-a600-de1c4addaf30.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -66,6 +66,7 @@ LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:
 %F = $(notdir $%)
 # environment
 DISPLAY = :0
+ 
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
@@ -73,7 +74,7 @@ PWD = /home/sachin/gitRepoSac/libFEM
 # default
 .LOADED := 
 # environment
-WSL_INTEROP = /run/WSL/67_interop
+WSL_INTEROP = /run/WSL/1287_interop
 # environment
 PULSE_SERVER = /mnt/wslg/PulseServer
 # environment
@@ -98,12 +99,14 @@ MAKE = $(MAKE_COMMAND)
 MAKECMDGOALS := all
 # environment
 SHLVL = 0
+# makefile (from 'makefile', line 2)
+solverIntef = $(CURDIR)/Solver_Interfaces/
 # default
 MAKE_VERSION := 4.2.1
 # environment
 USER = sachin
 # makefile
-.DEFAULT_GOAL := 
+.DEFAULT_GOAL := quad
 # environment
 NAME = DESKTOP-4SCI4JA
 # automatic
@@ -121,7 +124,12 @@ MAKEFLAGS = pqrR
 # environment
 MFLAGS = -pqrR
 # automatic
+ 
 *D = $(patsubst %/,%,$(dir $*))
+# makefile (from 'makefile', line 1)
+eigenPath = $(CURDIR)/
+# makefile (from 'makefile', line 3)
+incPath = $(CURDIR)/inc/
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -155,7 +163,7 @@ VSCODE_EXTHOST_WILL_SEND_SOCKET = true
 # environment
 WSL_DISTRO_NAME = Ubuntu
 # variable set hash-table stats:
-# Load=71/1024=7%, Rehash=0, Collisions=4/93=4%
+# Load=74/1024=7%, Rehash=0, Collisions=4/99=4%
 
 # Pattern-specific Variable Values
 
@@ -163,9 +171,9 @@ WSL_DISTRO_NAME = Ubuntu
 
 # Directories
 
-# . (device 2080, inode 58333): 8 files, no impossibilities.
+# . (device 2080, inode 58333): 13 files, no impossibilities.
 
-# 8 files, no impossibilities in 1 directories.
+# 13 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -181,18 +189,20 @@ all:
 #  File has not been updated.
 
 # Not a target:
-Makefile:
-#  Implicit rule search has been done.
-#  File does not exist.
-#  File has been updated.
-#  Failed to be updated.
-
-# Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  File does not exist.
+#  Last modified 2022-06-05 19:32:44.2400772
 #  File has been updated.
-#  Failed to be updated.
+#  Successfully updated.
+
+quad:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 5):
+	g++ -std=c++17 -g -c mainLaplaceQuad.cpp -I$(eigenPath) -I$(solverIntef) -I$(incPath)
+	g++ -std=c++17 -o main.exe mainLaplaceQuad.o
+	./main.exe
 
 # Not a target:
 .DEFAULT:
@@ -200,27 +210,29 @@ makefile:
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-GNUmakefile:
-#  Implicit rule search has been done.
-#  File does not exist.
-#  File has been updated.
-#  Failed to be updated.
+clean:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 9):
+	rm -v *.o
+	rm -v *.exe
 
 # files hash-table stats:
-# Load=6/1024=1%, Rehash=0, Collisions=0/15=0%
+# Load=6/1024=1%, Rehash=0, Collisions=0/16=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 16 / storage = 153 B / avg = 9 B
-# current buf: size = 8162 B / used = 153 B / count = 16 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 20 / storage = 201 B / avg = 10 B
+# current buf: size = 8162 B / used = 201 B / count = 20 / avg = 10 B
 
-# strcache performance: lookups = 19 / hit rate = 15%
+# strcache performance: lookups = 26 / hit rate = 23%
 # hash-table stats:
-# Load=16/8192=0%, Rehash=0, Collisions=1/19=5%
-# Finished Make data base on Sun Jun  5 11:35:56 2022
+# Load=20/8192=0%, Rehash=0, Collisions=1/26=4%
+# Finished Make data base on Sun Jun  5 19:32:50 2022
+ 
 
  
