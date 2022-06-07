@@ -15,9 +15,9 @@ int main()
     C_GaussData2DQuad gpData(2);
     C_Mesh2D mesh;
 
-    int noX = 4, noY = 2, IEL = 1, NNM, NDF = 1, totDof;
+    int noX = 2, noY = 1, IEL = 1, NNM, NDF = 1, totDof;
     mesh.meshRectangle({0,0.18},{0,0.1},noX,noY);
-    C_Matrix_Sparse kGlob;
+    C_Matrix_Sparse kGlob(mesh.num_Nd,mesh.num_Nd);
     C_QuadrilateralBasis feL(1, gpData);
     int itEl = 0;
 
@@ -38,7 +38,7 @@ int main()
         itEl++;
     }  
 
-    //std::cout << kGlob;
+    std::cout << kGlob;
     Eigen::VectorXd fGlobal(totDof);
 
     // i. Neumann Boundary Conditions
@@ -46,29 +46,45 @@ int main()
     // fGlobal(fDof) = 10.0;
 
     // ii. Dirichlet Boundary Conditions
-    int bc, NSPV = 6;
+    int bc, NSPV = 4;
     std::vector<int> ISPV;
     std::vector<double> VSPV;
 
-    ISPV = {0,4,5,9,10,14};
-    VSPV = {500,300,500,300,500,300};
+    //ISPV = {0,4,5,9,10,14};
+    //VSPV = {500,300,500,300,500,300};
+
+    //ISPV = {0,8,9,17,18,26,27,35};
+    //VSPV = {500,300,500,300,500,300,500,300};
+
+    ISPV = {0,2,3,5};
+    VSPV = {500,300,500,300};
 
     for(int ii = 0; ii < NSPV; ii++)
     {
         bc = ISPV[ii];
-        kGlob.col_NonSparseAssign(0.0, bc);
+        //kGlob.col_NonSparseAssign(0.0, bc);
         kGlob.row_NonSparseAssign(0.0, bc);
         kGlob(bc,bc) = 1.0;
         fGlobal(bc) = VSPV[ii]; 
     }
 
+    //std::cout << fGlobal;
+    std::cout << kGlob;
+
     // Solve, using Cholesky Factorization of kGlob
     Eigen::SparseMatrix<double> kG_eigen(totDof, totDof);
     convert_to_Eigen(kGlob, kG_eigen);
 
-    Eigen::SimplicialLDLT< Eigen::SparseMatrix<double> > chol;
-    chol.compute(kG_eigen);  
-    Eigen::VectorXd sol = chol.solve(fGlobal);
+    // Eigen::SimplicialLDLT< Eigen::SparseMatrix<double> > chol;
+    // chol.compute(kG_eigen);  
+    // Eigen::VectorXd sol = chol.solve(fGlobal);
+    // Eigen::SparseLU< Eigen::SparseMatrix<double>, Eigen::COLAMDOrdering<int>> solver;
+    Eigen::SparseLU< Eigen::SparseMatrix<double>, Eigen::AMDOrdering<int>> solver;
+
+    solver.analyzePattern(kG_eigen);
+    solver.factorize(kG_eigen);
+    Eigen::VectorXd sol=solver.solve(kG_eigen);
+
     std::cout << "\n";
     std::cout << sol;
     std::cout << "\n";
