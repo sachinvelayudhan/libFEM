@@ -1,6 +1,4 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-make: *** No rule to make target 'all'.  Stop.
-
 # GNU Make 4.2.1
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2016 Free Software Foundation, Inc.
@@ -8,7 +6,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Jun  7 14:56:11 2022
+# Make data base, printed on Tue Jun  7 21:51:54 2022
 
 # Variables
 
@@ -57,7 +55,7 @@ XDG_RUNTIME_DIR = /mnt/wslg/runtime-dir
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-4062c9e0-299d-412e-b9ce-f5314d576934.sock
+VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-ba50bb79-ee67-439b-9c0f-dfb4e964d41b.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -73,7 +71,7 @@ PWD = /home/sachin/gitRepoSac/libFEM
 # default
 .LOADED := 
 # environment
-WSL_INTEROP = /run/WSL/12_interop
+WSL_INTEROP = /run/WSL/2435_interop
 # environment
 PULSE_SERVER = /mnt/wslg/PulseServer
 # environment
@@ -85,7 +83,7 @@ LESSCLOSE = /usr/bin/lesspipe %s %s
 # environment
 LOGNAME = sachin
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
@@ -160,10 +158,8 @@ TERM = xterm-256color
 VSCODE_EXTHOST_WILL_SEND_SOCKET = true
 # environment
 WSL_DISTRO_NAME = Ubuntu
-# environment
-MOTD_SHOWN = update-motd
 # variable set hash-table stats:
-# Load=75/1024=7%, Rehash=0, Collisions=4/100=4%
+# Load=74/1024=7%, Rehash=0, Collisions=4/99=4%
 
 # Pattern-specific Variable Values
 
@@ -171,9 +167,9 @@ MOTD_SHOWN = update-motd
 
 # Directories
 
-# . (device 2080, inode 58333): 13 files, no impossibilities.
+# . (device 2080, inode 58333): 16 files, no impossibilities.
 
-# 13 files, no impossibilities in 1 directories.
+# 16 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -191,7 +187,7 @@ all:
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-05 19:32:44.2400772
+#  Last modified 2022-06-07 21:51:52.2062536
 #  File has been updated.
 #  Successfully updated.
 
@@ -204,6 +200,15 @@ quad:
 	g++ -std=c++17 -o main.exe mainLaplaceQuad.o
 	./main.exe
 
+quad1:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 9):
+	g++ -std=c++17 -g -c mainLaplaceQuad1.cpp -I$(eigenPath) -I$(solverIntef) -I$(incPath)
+	g++ -std=c++17 -o main.exe mainLaplaceQuad1.o
+	./main.exe
+
 # Not a target:
 .DEFAULT:
 #  Implicit rule search has not been done.
@@ -214,24 +219,26 @@ clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 9):
+#  recipe to execute (from 'makefile', line 13):
 	rm -v *.o
 	rm -v *.exe
 
 # files hash-table stats:
-# Load=6/1024=1%, Rehash=0, Collisions=0/16=0%
+# Load=7/1024=1%, Rehash=0, Collisions=0/17=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 20 / storage = 201 B / avg = 10 B
-# current buf: size = 8162 B / used = 201 B / count = 20 / avg = 10 B
+# strcache buffers: 1 (0) / strings = 24 / storage = 264 B / avg = 11 B
+# current buf: size = 8162 B / used = 264 B / count = 24 / avg = 11 B
 
-# strcache performance: lookups = 26 / hit rate = 23%
+# strcache performance: lookups = 31 / hit rate = 22%
 # hash-table stats:
-# Load=20/8192=0%, Rehash=0, Collisions=1/26=4%
-# Finished Make data base on Tue Jun  7 14:56:11 2022
+# Load=24/8192=0%, Rehash=0, Collisions=1/31=3%
+# Finished Make data base on Tue Jun  7 21:51:54 2022
 
  
+make: *** No rule to make target 'all'.  Stop.
+

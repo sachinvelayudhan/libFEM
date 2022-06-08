@@ -1,4 +1,4 @@
-make --dry-run --always-make --keep-going --print-directory
+make --dry-run --keep-going --print-directory
 make: Entering directory '/home/sachin/gitRepoSac/libFEM'
 g++ -std=c++17 -g -c mainLaplaceQuad.cpp -I/home/sachin/gitRepoSac/libFEM/ -I/home/sachin/gitRepoSac/libFEM/Solver_Interfaces/ -I/home/sachin/gitRepoSac/libFEM/inc/
 g++ -std=c++17 -o main.exe mainLaplaceQuad.o
