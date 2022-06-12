@@ -27,6 +27,8 @@ class C_Mesh2D: public C_Mesh
     public:
         void meshRectangle(std::vector<double>,std::vector<double>, int, int);
         std::vector<std::vector<double>> getElNodes(int);
+        // std::ofstream out1;
+        // std::ofstream out2;
 };
 
 void C_Mesh2D::meshRectangle(std::vector<double> xlim, std::vector<double> ylim, int noX, int noY)
@@ -77,6 +79,15 @@ std::vector<std::vector<double>> C_Mesh2D::getElNodes(int itEl)
         elNodes.push_back(nodes[node]);
     }
     return elNodes;
+     
+    // // Open the file
+    // out1.open("node_file.txt");
+
+    // if(out1.is_open())
+    // {
+    //     out1 << &elNodes;
+    //     out1.close();
+    // }
 }
 
 #endif
