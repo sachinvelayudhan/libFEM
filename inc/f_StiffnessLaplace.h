@@ -7,8 +7,6 @@ void stiffnessLaplace(const std::vector<std::vector<double>>& elNodes, const std
     double jac;
     double JxW;
 
-    //one_vec = 
-
     for(int itGp = 0; itGp < gpData.num_GP; itGp++)
     {
         C_Matrix_Dense& dsp = feL.getDerShapeFunction(itGp, elNodes, jac);

@@ -25,10 +25,10 @@ class C_Mesh{
 class C_Mesh2D: public C_Mesh
 {
     public:
-        void meshRectangle(std::vector<double>,std::vector<double>, int, int);
+        void meshRectangle(std::vector<double>, std::vector<double>, int, int);
         std::vector<std::vector<double>> getElNodes(int);
-        // std::ofstream out1;
-        // std::ofstream out2;
+        std::ofstream out1; //
+        std::ofstream out2;
 };
 
 void C_Mesh2D::meshRectangle(std::vector<double> xlim, std::vector<double> ylim, int noX, int noY)
@@ -44,17 +44,34 @@ void C_Mesh2D::meshRectangle(std::vector<double> xlim, std::vector<double> ylim,
     y = ylim[0];
     num_Nd = nodex*nodey; // Total number of nodes
 
+    // Open the file to 
+    out2.open("node_file.txt");
+
     // Create the nodes in the rectangular mesh
+    std::vector<double> tmp1;
     for (int i = 0; i < nodey; i++)
     {
         x = xlim[0];
         for (int j = 0; j < nodex; j++)
         {
-            nodes.push_back({x,y});
+            tmp1 = {x,y};
+            nodes.push_back(tmp1);
+
+            // Writing coordinate matrix to text file
+            for(int i = 0; i < tmp1.size(); i++)
+            {
+                out2 << tmp1[i] <<" ";
+            }
+            out2 << "\n";
+
             x += dx;
         }
         y += dy;
     }
+    out2.close(); 
+
+    // Open the file
+    out1.open("element_file.txt");
 
     // Create the connectivity for the quadrilateral
     num_El = noX*noY;
@@ -65,10 +82,19 @@ void C_Mesh2D::meshRectangle(std::vector<double> xlim, std::vector<double> ylim,
         for (int i = 0; i < noX; i++)
         {
             tmp = {row+i, row+i+1, noX+2+i+row, noX+1+i+row};
+
+            // Writing connectivity matrix to text file
+            for(int i = 0; i < tmp.size(); i++)
+            {
+                out1 << tmp[i] <<" ";
+            }
+            out1 << "\n";
+
             elements.push_back(tmp);
         }
         row = row + noX + 1;
     }   
+    out1.close();  
 }
 
 std::vector<std::vector<double>> C_Mesh2D::getElNodes(int itEl)
@@ -79,15 +105,6 @@ std::vector<std::vector<double>> C_Mesh2D::getElNodes(int itEl)
         elNodes.push_back(nodes[node]);
     }
     return elNodes;
-     
-    // // Open the file
-    // out1.open("node_file.txt");
-
-    // if(out1.is_open())
-    // {
-    //     out1 << &elNodes;
-    //     out1.close();
-    // }
 }
 
 #endif

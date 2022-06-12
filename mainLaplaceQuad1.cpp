@@ -10,10 +10,14 @@
 #include "./inc/f_StiffnessLaplace.h"
 #include "./Solver_Interfaces/f_SolverInterfaces.h"
 
+#include<fstream>
+
 int main()
 {
     C_GaussData2DQuad gpData(2);
     C_Mesh2D mesh;
+
+    std::ofstream out;
 
     int noX = 2, noY = 2, IEL = 1, NNM, NDF = 1, totDof;
     double x0 = 0, xa = 1.0, y0 = 0, yb = 1.0;
@@ -80,6 +84,12 @@ int main()
     std::cout << "\n";
     std::cout << sol;
     std::cout << "\n";
+
+    out.open("solution.txt");
+
+    //Writing solution vector to a text file
+    out << sol;
+    out.close();
 
     return 0;
 
